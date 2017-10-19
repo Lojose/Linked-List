@@ -28,6 +28,7 @@ void List::push_back (int val) {
 		/*for (Link * cur = Listfront; )
 		Listfront->next = pt1;
 		*/
+		// I was thinkinng on using the Prepedn function to help me 
 	}
 	n++; 
 }
