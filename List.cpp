@@ -25,8 +25,9 @@ void List::push_back (int val) {
 		Listfront = Listfront = pt1;
 	} else {
 		Listback->next = pt1; 
-		for (Link * cur = Listfront; )
+		/*for (Link * cur = Listfront; )
 		Listfront->next = pt1;
+		*/
 	}
 	n++; 
 }
