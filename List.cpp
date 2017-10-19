@@ -19,19 +19,22 @@ void List::Prepend( Link *x) {
 		Prepend(Listfront->next); 
 	}
 }
-void List::push_back (int val) {
+void List::push_back (int val){
 	Link *pt1 = new Link (val);
 	if (empty()) {
-		Listfront = Listfront = pt1;
+		Listfront = Listback = pt1;
 	} else {
-		Listback->next = pt1; 
-		/*for (Link * cur = Listfront; )
-		Listfront->next = pt1;
-		*/
-		// I was thinkinng on using the Prepedn function to help me 
+		for (Link *cur1 = Listfront; cur1 != nullptr; cur1 = cur1->next) {
+			if (cur1 == nullptr) Listback = cur1; 
+			pt1 = Listback; 
+		}
+		Link *update = new Link(val); 
+		Listfront->next = update; 
+		Listfront = update; 
 	}
 	n++; 
 }
+	
 
 void List::push_front(int val) {
 	Link *pt2 = new Link(val); 
