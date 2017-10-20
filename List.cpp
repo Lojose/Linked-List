@@ -1,14 +1,9 @@
 #include "List.h"
-#include "Iterator.h"
-#include <list>
-#include <cassert>
-#include <iostream> //Testing Purposes
 
-using namespace std; //Testing Purposes
 List::List () {
 	Listfront = nullptr;
 	Listback = nullptr;  
-	n = 0, x = 0; 
+	n = 0, x = 0;
 }
 List::~List () {
 }
@@ -51,47 +46,43 @@ void List::push_front(int val) {
 }
 
 void List::prepop_back(int val) {
-	Link *pt3 = new Link(val);
-	Listback->next = pt3;
-	Listback = pt3;
-	delete pt3;
+		Link *pt3 = new Link(val);
+		Listback->next = pt3;
+		Listback = pt3;
+		delete pt3;
+	
 }
 
+void List::prepop_front(int val) {
+	Link *pt5 = new Link(val);
+	Listfront = pt5; 
+	delete pt5;
+}
 void List::pop_back() {
 	prepop_back(0); 
 	++x; 
 }
-void 
 
-int List::size() {
-	n = n - x; 
-	return n; 
- }
+void List::pop_front() {
+	prepop_front(0); 
+	++x; 
 
-int main() {
-	List a; 
-	a.push_back(5); 
-	cout << "test1" << endl;
-	//cout << Listfront << endl;
-	a.push_back(4); 
-	cout << "test2" << endl;
-	a.push_back(23); 
-	cout << "test3" << endl;
-	a.push_front(10); 
-	cout << "test4" << endl;
-	a.push_front(13); 
-	cout << "test5" << endl;
-	a.push_front(0); 
-	cout << "test6" << endl; 
-	cout << a.size() << endl; 
-	a.pop_back();
-	cout << a.size() << endl;
-	a.pop_back();
-	a.pop_back();
-	a.pop_back();
-	a.pop_back();
-	a.pop_back();
-	a.pop_back();
-	a.pop_back();
-	cout << "All test passed." << endl; 
 }
+int List::size() {
+	int l  = n - x; 
+	return l;
+ }
+Iterator List::begin() {
+	return Iterator(Listfront); 
+	//if (link = nullptr) return Iterator(nullptr); 
+}
+
+
+
+
+
+/* cout << a << endl; 
+list<int> a;
+for (list<int>::iterator i = Listback.begin(); i != Listfront.end(); ++i)
+cout << *i << endl
+*/
