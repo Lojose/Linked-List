@@ -4,7 +4,7 @@
 
 class List {
 public:
-	List();
+	List():listfront(nullptr), listback(nullptr) {}
 	~List();
 	bool empty() const;
 	void push_back (int val);
@@ -12,14 +12,12 @@ public:
 	int size(); 
 	void pop_back();
 	void pop_front();
+	void insert(Iterator it, int val); 
+	void erase(Iterator it);
 	Iterator begin();
 	Iterator end();
 private:
-	Link *Listfront;
-	Link *Listback; 
-	void prepop_back(int val); 
-	void prepop_front(int val); 
-	int n; 
-	int x; 
+	Link *listfront;
+	Link *listback;
+	friend class Iterator;
 };
- 
