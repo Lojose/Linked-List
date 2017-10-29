@@ -1,88 +1,111 @@
 #include "List.h"
 
-List::List () {
-	Listfront = nullptr;
-	Listback = nullptr;  
-	n = 0, x = 0;
-}
 List::~List () {
+	delete listfront, listback; 
 }
  
 bool List::empty() const {
-	return Listfront == nullptr;
+	return listfront == nullptr; 
 }
 
-void List::push_back (int val) {
-	Link *pt1 = new Link (val);
-	if (empty()) {
-		Listfront = Listback = pt1;
-	} else {
-		for (Link *cur1 = Listfront; cur1 != nullptr; cur1 = cur1->next) {
-			if (cur1 == nullptr) Listback = cur1; 
-			pt1 = Listback; 
-		}
-		Link *update1 = new Link(val); 
-		Listfront->next = update1; 
-		Listfront = update1; 
+void List::push_back(int val) {
+	Link *pt1 = new Link(val);
+	if (empty()) { 
+		listfront = listback = pt1;
 	}
-	n++; 
+	else { 
+		listback->next = pt1;
+		listback = pt1; 
+	}
 }
 
 void List::push_front(int val) {
-	Link *pt2 = new Link(val); 
-	if (empty ()) {
-		Listback = Listfront = pt2; 
+	Link *pt2 = new Link(val);
+	if (empty()) {
+		listback = listfront = pt2;
 	}
 	else {
-		for (Link *cur2 = Listfront; cur2 != nullptr; cur2 = cur2->next) {
-			if (cur2 == nullptr) Listfront = cur2; 
-			cur2 = Listfront; 
-		}
-		Link *update2 = new Link(val); 
-		Listback->next = update2; 
-		Listback = update2; 
+		pt2->next = listfront;
+		listfront = pt2;
 	}
-	n++; 
 }
 
-void List::prepop_back(int val) {
-		Link *pt3 = new Link(val);
-		Listback->next = pt3;
-		Listback = pt3;
-		delete pt3;
-	
+void List::erase(Iterator it) {
+	if (it.link == listfront) { 
+		Link *pt = listfront->next;
+		delete listfront;
+		listfront = pt; 
+		return; 
+	}
+	else {
+		Link *prev = listfront;
+		while (prev->next != it.link) {
+			prev = prev->next;
+		}
+		Link *o = prev->next;
+		prev->next = prev->next->next;
+		delete o;
+	}
 }
 
-void List::prepop_front(int val) {
-	Link *pt5 = new Link(val);
-	Listfront = pt5; 
-	delete pt5;
+void List::insert(Iterator it, int val) {
+	if (it.link == listfront) {
+		push_front(val);
+		return;
+	}
+	else {
+		Link *n = new Link(val);
+		Link *prev = listfront;
+		while (prev->next != it.link) {
+			prev = prev->next;
+		}
+		prev->next = n;
+		n->next = it.link;
+	}
 }
-void List::pop_back() {
-	prepop_back(0); 
-	++x; 
+
+void List::pop_back() { 
+	if (listfront == listback) { 
+		Link *pt11 = listback->next; 
+		delete pt11; 
+		listback = nullptr; 
+		listfront = nullptr; 
+	}
+	else {
+		Link *pt12 = listback->next;  
+		delete listback; 
+		listback = pt12; 
+	}
 }
 
 void List::pop_front() {
-	prepop_front(0); 
-	++x; 
-
+	if (listfront == listback) {
+		Link *pt11 = listfront->next; 
+		delete pt11; 
+		listfront = nullptr; 
+		listback = nullptr; 
+	}
+	else {
+		Link *pt10 = listfront->next;
+		delete listfront;
+		listfront = pt10;
+	}
 }
-int List::size() {
-	int l  = n - x; 
-	return l;
- }
+
+int List::size() { 
+	Link * link = listfront;
+	int count = 0; 
+	while (link != nullptr) {
+		++count;
+		link = link->next;
+	}
+	return count;
+}
+
 Iterator List::begin() {
-	return Iterator(Listfront); 
-	//if (link = nullptr) return Iterator(nullptr); 
+	return Iterator(listfront);  
 }
 
-
-
-
-
-/* cout << a << endl; 
-list<int> a;
-for (list<int>::iterator i = Listback.begin(); i != Listfront.end(); ++i)
-cout << *i << endl
-*/
+Iterator List::end() {
+		return Iterator(nullptr);
+}
