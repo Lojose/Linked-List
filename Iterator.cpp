@@ -1,15 +1,20 @@
-#pragma once
-#include "Link.h"
+#include "iterator.h"
+#include <cassert>
 
-class Iterator {
-public:
-	void operator++();
-	int & operator*();
-	bool operator ==(const Iterator & rhs); 
-	bool operator !=(const Iterator & rhs);
+void Iterator::operator++() {
+	assert(link != nullptr); 
+	link = link->next; 
+}
 
-private:
-	Iterator(Link *link) : link(link) {}
-	Link *link = nullptr; 
-	friend class List; 
-};
+int & Iterator::operator*() {
+	assert(link != nullptr); 
+	return link->val;
+}
+
+bool Iterator::operator==(const Iterator & rhs) {
+	return link == rhs.link; 
+}
+
+bool Iterator::operator!=(const Iterator & rhs) {
+	return link != rhs.link;
+}
